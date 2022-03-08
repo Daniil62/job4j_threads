@@ -9,13 +9,14 @@ public class ConsoleProgress implements Runnable {
     @Override
     public void run() {
         int index = 0;
-        while (!Thread.currentThread().isInterrupted()) {
+        Thread thread = Thread.currentThread();
+        while (!thread.isInterrupted()) {
             System.out.print("\r load: " + PROCESS[index++]);
             index = index == PROCESS.length ? 0 : index;
             try {
                 Thread.sleep(FREQUENCY);
             } catch (InterruptedException e) {
-                break;
+                thread.interrupt();
             }
         }
     }
